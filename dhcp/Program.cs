@@ -12,6 +12,7 @@ namespace dhcp
     {
         static List<IP> excluded = new List<IP>();
         static Dictionary<string, IP> reserved = new Dictionary<string, IP>();
+        static Dictionary<string, IP> dhcp = new Dictionary<string, IP>();
         static void BeolvasExcuded()
         {
             try
@@ -30,16 +31,16 @@ namespace dhcp
                 Console.WriteLine(ex.Message);
             }
         }
-        static void BeolvasReserved()
+        static void BeolvasDictionary(Dictionary<string, IP> d, string filenev)
         {
             try
             {
-                StreamReader file = new StreamReader("reserved.csv");
+                StreamReader file = new StreamReader(filenev);
                 
                 while (!file.EndOfStream)
                 {
                     string[] adat = file.ReadLine().Split(';');
-                    reserved.Add(adat[0], new IP(adat[1]));
+                    d.Add(adat[0], new IP(adat[1]));
                 }
 
                 file.Close();
@@ -53,8 +54,9 @@ namespace dhcp
         static void Main(string[] args)
         {
             BeolvasExcuded();
-            BeolvasReserved();
-            foreach (var r in reserved)
+            BeolvasDictionary(reserved, "reserved.csv");
+            BeolvasDictionary(dhcp, "dhcp.csv");
+            foreach (var r in dhcp)
             {
                 Console.WriteLine(r.Key+"--->"+r.Value.IPSzoveg);
             }
