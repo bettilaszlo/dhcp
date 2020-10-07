@@ -10,6 +10,13 @@ namespace dhcp
     {
         static void Main(string[] args)
         {
+            var ip = new IP("192.168.10.100");
+
+            Console.WriteLine(ip.IPSzoveg);
+            Console.WriteLine(ip.CimPluszEgy());
+
+
+            Console.ReadKey();
         }
     }
 }
